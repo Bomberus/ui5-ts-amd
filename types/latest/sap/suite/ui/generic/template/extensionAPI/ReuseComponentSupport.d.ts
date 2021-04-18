@@ -1,0 +1,1 @@
+export default sap.suite.ui.generic.template.extensionAPI.ReuseComponentSupport;

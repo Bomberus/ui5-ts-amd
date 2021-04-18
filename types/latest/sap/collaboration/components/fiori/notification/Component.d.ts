@@ -1,0 +1,1 @@
+export default sap.collaboration.components.fiori.notification.Component;

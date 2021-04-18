@@ -1,0 +1,1 @@
+export default sap.base.security.URLWhitelist;

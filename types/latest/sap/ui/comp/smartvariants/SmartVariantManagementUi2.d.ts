@@ -1,0 +1,1 @@
+export default sap.ui.comp.smartvariants.SmartVariantManagementUi2;

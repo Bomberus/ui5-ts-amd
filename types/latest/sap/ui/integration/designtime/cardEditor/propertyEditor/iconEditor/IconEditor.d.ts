@@ -1,0 +1,1 @@
+export default sap.ui.integration.designtime.cardEditor.propertyEditor.iconEditor.IconEditor;

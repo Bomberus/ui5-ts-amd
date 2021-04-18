@@ -1,0 +1,1 @@
+export default sap.ui.fl.initial._internal.connectors.StaticFileConnector;

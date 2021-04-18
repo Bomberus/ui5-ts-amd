@@ -1,0 +1,1 @@
+export default sap.ui.comp.smartfield.flexibility.ODataV2Delegate;

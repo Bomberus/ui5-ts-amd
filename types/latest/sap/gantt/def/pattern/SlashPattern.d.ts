@@ -1,0 +1,1 @@
+export default sap.gantt.def.pattern.SlashPattern;

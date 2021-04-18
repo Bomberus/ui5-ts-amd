@@ -1,0 +1,1 @@
+export default sap.ushell.ui.launchpad.ActionItem;

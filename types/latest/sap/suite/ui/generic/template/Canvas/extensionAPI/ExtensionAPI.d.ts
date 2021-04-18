@@ -1,0 +1,1 @@
+export default sap.suite.ui.generic.template.Canvas.extensionAPI.ExtensionAPI;

@@ -1,0 +1,1 @@
+export default sap.apf.core.ReadRequest;

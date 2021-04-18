@@ -1,0 +1,1 @@
+export default sap.ui.generic.app.navigation.service.SuppressionBehavior;

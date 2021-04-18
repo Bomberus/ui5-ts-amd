@@ -1,0 +1,1 @@
+export default sap.ca.ui.charts.BarListItem;

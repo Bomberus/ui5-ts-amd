@@ -1,0 +1,1 @@
+export default sap.ui.core.support.usage.EventBroadcaster;

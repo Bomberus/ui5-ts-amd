@@ -1,0 +1,1 @@
+export default sap.viz.ui5.types.controller.Interaction_selectability_mode;

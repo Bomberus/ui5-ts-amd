@@ -1,0 +1,1 @@
+export default sap.gantt.config.Shape;

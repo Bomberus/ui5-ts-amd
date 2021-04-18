@@ -1,0 +1,1 @@
+export default sap.ui.vbm.VBI;

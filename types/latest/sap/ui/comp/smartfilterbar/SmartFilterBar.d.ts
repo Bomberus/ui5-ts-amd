@@ -1,0 +1,1 @@
+export default sap.ui.comp.smartfilterbar.SmartFilterBar;

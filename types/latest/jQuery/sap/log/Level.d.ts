@@ -1,0 +1,1 @@
+export default jQuery.sap.log.Level;
