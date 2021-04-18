@@ -1,6 +1,6 @@
 {
   "name": "ui5-ts-amd",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Develop UI5 Components in plain typescript and transpile to ES5",
   "scripts": {
     "build": "node build.js"
@@ -8,6 +8,10 @@
   "main": "lib/index.js",
   "author": "Pascal Maximilian Bremer",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bomberus/ui5-ts-amd"
+  },
   "dependencies": {
     "typescript": "^4.2.4"
   },
