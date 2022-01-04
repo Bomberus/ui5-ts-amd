@@ -1,0 +1,1 @@
+export default sap.ui.mdc.TableP13nMode;

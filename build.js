@@ -1,4 +1,4 @@
-const ts = require("typescript");
+const { ts } = require("ts-morph");
 const { readFileSync, writeFileSync, mkdirSync } = require("fs");
 const { join } = require("path");
 const https = require("https");

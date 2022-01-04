@@ -1,6 +1,4 @@
-import * as ts from "typescript";
-import { readFileSync } from "fs";
-import { join } from "path";
+import { Project, ts } from "ts-morph";
 
 export function transpileTS(
   namespace: string,
@@ -8,89 +6,41 @@ export function transpileTS(
   sourceContent: string,
   tsConfig: object
 ): string {
-  const UI5TransformerFactory: ts.TransformerFactory<ts.SourceFile> = (
-    context
-  ) => {
-    let importList: { [key: string]: boolean } = {};
+  const project = new Project({
+    ...tsConfig, useInMemoryFileSystem: true
+  })
 
-    function addDecorator(node: ts.ClassDeclaration) {
-      let newDecorators = context.factory.createNodeArray([
-        context.factory.createDecorator(
-          context.factory.createCallExpression(
-            context.factory.createIdentifier("UI5"),
+  const sourceFile = project.createSourceFile("Coding.ts", sourceContent, { overwrite: true });
+  sourceFile.transform( traversal => {
+    const node = traversal.visitChildren();
+
+    if (ts.isClassDeclaration(node)) {
+      let UI5Class =  ts.factory.updateClassDeclaration(
+        node,
+        [ts.factory.createDecorator(
+          ts.factory.createCallExpression(
+            ts.factory.createIdentifier('UI5'),
             undefined,
-            context.factory.createNodeArray([
-              context.factory.createStringLiteral(namespace, false),
-            ])
+            [ts.factory.createStringLiteral(namespace, true)]
+            )
           )
-        ),
-      ]);
-
-      if (node.decorators) {
-        newDecorators = context.factory.createNodeArray(
-          node.decorators.concat(newDecorators)
-        );
-      }
-
-      return newDecorators;
+        ],
+        node.modifiers,
+        node.name,
+        node.typeParameters,
+        node.heritageClauses,
+        node.members
+      )
+      return UI5Class;
     }
 
-    function transformUI5Class(node: ts.ClassDeclaration) {
-      const heritageClasses = node.heritageClauses?.reduce(
-        (acc: string[], curr) => {
-          return acc.concat(
-            curr.types.map((t) => (t.expression as ts.StringLiteral).text)
-          );
-        },
-        []
-      );
+    return node;
 
-      if (
-        heritageClasses?.reduce((acc, curr) => acc || importList[curr], false)
-      ) {
-        let UI5Class = context.factory.updateClassDeclaration(
-          node,
-          addDecorator(node),
-          node.modifiers,
-          node.name,
-          node.typeParameters,
-          node.heritageClauses || [],
-          node.members
-        );
-        return ts.setTextRange(UI5Class, node);
-      } else {
-        return node;
-      }
-    }
-
-    function analyzeImport(node: ts.ImportDeclaration) {
-      if (node.importClause && node.importClause.name) {
-        importList[
-          node.importClause.name.text
-        ] = (node.moduleSpecifier as ts.StringLiteral).text.startsWith("sap/");
-      }
-    }
-
-    return (sourceFile) => {
-      const visitor = (node: ts.Node): ts.Node => {
-        if (node.kind === ts.SyntaxKind.ClassDeclaration) {
-          return ts.visitEachChild(
-            transformUI5Class(<ts.ClassDeclaration>node),
-            visitor,
-            context
-          );
-        } else if (node.kind === ts.SyntaxKind.ImportDeclaration) {
-          analyzeImport(<ts.ImportDeclaration>node);
-        }
-        return ts.visitEachChild(node, visitor, context);
-      };
-      return ts.visitNode(sourceFile, visitor);
-    };
-  };
-
+  })  
+  
+  
   return ts.transpileModule(sourceContent, {
     ...tsConfig, 
     fileName,
-    transformers: {before: [UI5TransformerFactory]}
   }).outputText
 }

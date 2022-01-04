@@ -1,0 +1,1 @@
+export default sap.ui.mdc.p13n.AdaptationProvider;

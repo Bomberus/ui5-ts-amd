@@ -1,0 +1,1 @@
+export default sap.esh.search.ui.SearchCompositeControl;
